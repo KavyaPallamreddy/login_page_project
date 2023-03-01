@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: shifts-container
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: stacksimplify/kubenginx:1.0.0
         imagePullPolicy: Always
         resources:
           limits:
