@@ -58,8 +58,12 @@ pipeline {
 			       }
 			    }
 			}
-		  
-            
-    
-	  }
+	      stage ("Kube Deploy") {
+		    steps {
+			withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', serverUrl: '') {
+			 sh "kubectl apply -f eks-deployment.yaml"
+			}
+                    }
+                  }
+          }
 }
