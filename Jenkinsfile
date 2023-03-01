@@ -64,8 +64,9 @@ pipeline {
 				sh 'cp -R helm/* .'
 				sh 'ls -ltr'
 				sh 'pwd'
-				sh '/usr/local/bin/helm upgrade --install users users  --set image.repository= --set image.tag=latest'
-
+				sh '/usr/local/bin/helm upgrade --install users users  --set image.repository=268360024445.dkr.ecr.us-west-2.amazonaws.com/users --set image.tag=latest'
+                                sh 'pwd'
+				sh '/usr/local/bin/helm upgrade --install shifts shifts  --set image.repository=stacksimplify/kubenginx --set image.tag=1.0.0'
 		    }           
         }
 	               }
