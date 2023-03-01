@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: shifts-container
-        image: 268360024445.dkr.ecr.us-west-2.amazonaws.com/users:latest
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: Always
         resources:
           limits:
@@ -32,45 +32,11 @@ spec:
             cpu: '1'
             memory: '500Mi'
         ports:
-        - containerPort: 8085
+        - containerPort: 8080
           name: http
           protocol: TCP
       imagePullSecrets:
       - name: regcred
-# Service - LoadBalancer
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: shifts-service
-  labels:
-    app: shifts
-spec:
-  selector:
-    app: shifts
-  type: LoadBalancer
-  ports:
-  - name: http
-    port: 80
-    protocol: TCP
-    targetPort: 8085
-#HorizontalPodAutoscaler
----
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
- name: shifts-hpa
-spec:
- maxReplicas: 5
- minReplicas: 1
- scaleTargetRef:
-   apiVersion: apps/v1
-   kind: Deployment
-   name: shifts-deployment
- targetCPUUtilizationPercentage: 70
-
-
-
 
 
 
