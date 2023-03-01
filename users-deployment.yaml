@@ -1,0 +1,42 @@
+#Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-deployment
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  minReadySeconds: 5
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: users
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      containers:
+      - name: users-container
+        image: 268360024445.dkr.ecr.us-west-2.amazonaws.com/users:latest
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: '1'
+            memory: '500Mi'
+          requests:
+            cpu: '1'
+            memory: '500Mi'
+        ports:
+        - containerPort: 8085
+          name: http
+          protocol: TCP
+      imagePullSecrets:
+      - name: regcred
+
+
+

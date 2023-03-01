@@ -7,7 +7,7 @@ pipeline {
 	  environment {
 		AWS_ACCOUNT_ID="268360024445"
 		AWS_DEFAULT_REGION="us-west-2"
-		IMAGE_REPO_NAME="petcline-app"
+		IMAGE_REPO_NAME="users"
 		IMAGE_TAG="latest"
 		REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
 	            }
@@ -40,7 +40,7 @@ pipeline {
                     }
                  }
          
-              stage('Build docker image') {
+             /* stage('Build docker image') {
                    steps {
                       script { 
 			 sh "docker build -t ${IMAGE_REPO_NAME} ./docker"
@@ -59,7 +59,7 @@ pipeline {
 			    }
 			}
 		  
-            
+            */
     
 	  }
 }
