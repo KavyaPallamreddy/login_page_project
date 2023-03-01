@@ -37,6 +37,38 @@ spec:
           protocol: TCP
       imagePullSecrets:
       - name: regcred
+# HorizontalPodAutoscaler
+
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+ name: users-hpa
+spec:
+ maxReplicas: 5
+ minReplicas: 1
+ scaleTargetRef:
+   apiVersion: apps/v1
+   kind: Deployment
+   name: users-deployment
+ targetCPUUtilizationPercentage: 70
+ 
+# Service - LoadBalancer
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-service
+  labels:
+    app: users
+spec:
+  selector:
+    app: users
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8085
 
 
 
