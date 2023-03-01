@@ -58,12 +58,15 @@ pipeline {
 			       }
 			    }
 			}
-	      stage ("Kube Deploy") {
-		    steps {
-			withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', serverUrl: '') {
-			 sh "kubectl apply -f users-deployment.yaml"
-			}
-                    }
-                  }
-          }
+              stage('Build on k8 ') {
+		    steps {           
+				sh 'pwd'
+				sh 'cp -R helm/* .'
+				sh 'ls -ltr'
+				sh 'pwd'
+				sh '/usr/local/bin/helm upgrade --install users users  --set image.repository= --set image.tag=latest'
+
+		    }           
+        }
+	               }
 }
