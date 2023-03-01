@@ -37,6 +37,40 @@ spec:
           protocol: TCP
       imagePullSecrets:
       - name: regcred
+# Service - LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shifts-service
+  labels:
+    app: shifts
+spec:
+  selector:
+    app: shifts
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8085
+#HorizontalPodAutoscaler
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+ name: shifts-hpa
+spec:
+ maxReplicas: 5
+ minReplicas: 1
+ scaleTargetRef:
+   apiVersion: apps/v1
+   kind: Deployment
+   name: shifts-deployment
+ targetCPUUtilizationPercentage: 70
+
+
+
 
 
 
